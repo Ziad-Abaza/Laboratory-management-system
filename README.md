@@ -3,7 +3,7 @@
 
 A comprehensive system for managing laboratory operations, clients, tests, orders, and payments.
 
-[![Database Schema Diagram](https://via.placeholder.com/800x600.png?text=Database+Schema+Diagram)](https://github.com/Ziad-Abaza/Laboratory-management-system/blob/main/database\database-4.png)
+[![Database Schema Diagram](https://via.placeholder.com/800x600.png?text=Database+Schema+Diagram)](https://github.com/Ziad-Abaza/Laboratory-management-system/blob/main/database/database-4.png)
 
 ## Features
 
