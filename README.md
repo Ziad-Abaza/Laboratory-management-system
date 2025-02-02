@@ -1,66 +1,150 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Laboratory Management System
 
-## About Laravel
+A comprehensive system for managing laboratory operations, clients, tests, orders, and payments.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[![Database Schema Diagram](https://via.placeholder.com/800x600.png?text=Database+Schema+Diagram)](https://github.com/Ziad-Abaza/Laboratory-management-system/blob/main/database\database-4.png)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **User Management**
+  - Role-based access control (Admin, Partner, LabWorker)
+  - User status tracking (Active/Inactive)
+  - Secure authentication
 
-## Learning Laravel
+- **Client Management**
+  - Client demographic tracking
+  - Medical notes storage
+  - Contact information management
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Test Management**
+  - Test categorization
+  - Pricing and unit configuration
+  - Reference ranges by age and gender
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Order System**
+  - Test order tracking (Pending/Completed/Overdue)
+  - Result entry and tracking
+  - Client-order association
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Payment System**
+  - Multi-payment tracking
+  - Payment status (Pending/Partially Paid/Fully Paid)
+  - Financial reporting
 
-## Laravel Sponsors
+- **Home Service**
+  - Mobile sample collection management
+  - Prescription image upload
+  - Service status tracking
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **System Settings**
+  - Configurable key-value settings
+  - System-wide parameter management
 
-### Premium Partners
+## Technologies Used
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- PHP 8.x
+- Laravel 10.x
+- MySQL 8.x
+- REST API
+- Composer
+
+## Database Schema
+
+### Key Tables
+
+| Table Name               | Description                                                                 |
+|--------------------------|-----------------------------------------------------------------------------|
+| `users`                  | System users with role-based access permissions                             |
+| `clients`                | Patient/client demographic and contact information                          |
+| `lab_tests`              | Laboratory test configurations and pricing                                  |
+| `orders`                 | Client test orders with status tracking                                     |
+| `order_has_lab_tests`    | Many-to-many relationship between orders and lab tests                      |
+| `payments`               | Financial transactions linked to orders                                     |
+| `reference_ranges`       | Medical reference ranges based on age and gender                            |
+| `home_service`           | Mobile sample collection requests and tracking                              |
+| `system_settings`        | Configurable system parameters                                              |
+
+### Relationships
+- Users ↔ Orders (One-to-Many)
+- Clients ↔ Orders (One-to-Many)
+- Orders ↔ LabTests (Many-to-Many through order_has_lab_tests)
+- LabTests ↔ ReferenceRanges (One-to-Many)
+- Orders ↔ Payments (One-to-Many)
+
+## Installation
+
+1. **Clone Repository**
+   ```bash
+   git clone https://github.com/Ziad-Abaza/Laboratory-management-system.git
+   cd Laboratory-management-system
+   ```
+
+2. **Install Dependencies**
+   ```bash
+   composer install
+   ```
+
+3. **Configure Environment**
+   ```bash
+   cp .env.example .env
+   # Update DB credentials in .env file
+   ```
+
+4. **Database Setup**
+   ```bash
+   php artisan migrate
+   php artisan db:seed  # If seeders are available
+   ```
+
+5. **Start Server**
+   ```bash
+   php artisan serve
+   ```
+
+## API Documentation
+
+### Example User Endpoints
+
+```http
+GET /api/users
+POST /api/users
+GET /api/users/{id}
+PUT /api/users/{id}
+DELETE /api/users/{id}
+PATCH /api/users/{id}/toggle-status
+```
+
+**Sample Request:**
+```json
+{
+  "name": "John Doe",
+  "userCode": "LAB123",
+  "password": "securepassword",
+  "role": "LabWorker",
+  "status": "Active",
+  "Phone": "+201234567890"
+}
+```
+
+## Security
+
+- Role-based access control
+- Password hashing with bcrypt
+- CSRF protection
+- API authentication with Sanctum
+- Input validation
+- Error handling middleware
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT License - See [LICENSE](LICENSE) for details.
+
